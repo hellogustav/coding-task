@@ -69,6 +69,7 @@
   outline: none;
   margin: 0px -1px;
   cursor: pointer;
+  width: 33%;
 }
 .ToggleOption:first-child {
   border-radius: 3px 0 0 3px;
@@ -87,7 +88,70 @@
 
 .ToggleOption-icon {
   width: 16px;
-  height: 16px; width: 16px;
   height: 16px;
   margin-right: 8px;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 500px;
+  justify-content: space-between;
+}
+
+.vendors-list,
+.summary-list,
+.selection-list {
+  width: 33.333%;
+  border: solid 1px #d7e2e8;
+}
+
+.summary-list {
+  background-color: #fafbfc;
+  border-left: none;
+}
+
+.vendors-list {
+  border-right: none;
+}
+
+.section-header {
+  font-size: 13px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.08;
+  letter-spacing: normal;
+  color: #13293d;
+  text-align: left;
+  padding: 20px;
+}
+
+.section-header .title {
+  margin: 0;
+}
+
+.selection-list .section-header {
+  font-size: 14px;
+  border-bottom: solid 1px #d7e2e8;
+}
+
+.list-item {
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.list-item .icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+.info-container {
+  padding: 20px;
 }
