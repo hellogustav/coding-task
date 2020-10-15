@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./App.css";
 import Icon from "./Icon";
 import InfoBox from "./InfoBox";
@@ -12,6 +12,7 @@ import {
   INTERNAL_SCOPE,
   VENDORS_SCOPE,
 } from "./options.contants";
+import axios from "axios";
 
 function App() {
   const toggleOptions = [
@@ -21,14 +22,29 @@ function App() {
   ];
 
   const [scope, setScope] = React.useState("global");
+  const [data, setData] = useState({ vendors: [], circles: [] });
+  const [state, setState] = useState({ allVendorsButtonSelected: false, circleButtonSelection: '', circlesSelected: [], vendorsSelected: [] });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const vendorResponse = await axios(
+        'https://mock.hellogustav.com/vendors',
+      );
+      const circleResponse = await axios(
+        'https://mock.hellogustav.com/circles',
+      );
+      setData({ ...data, vendors: vendorResponse.data.vendors, circles: circleResponse.data.circles });
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="App">
       <Toggle options={toggleOptions} active={scope} onChange={setScope} />
       <div className="main-container">
-        <VendorsList scope={scope} />
-        <SelectionList scope={scope} />
-        <SummaryList scope={scope} />
+        <VendorsList scope={scope} circles={data.circles} vendors={data.vendors} setState={setState} state={state} />
+        <SelectionList scope={scope} setState={setState} state={state} />
+        <SummaryList scope={scope} setState={setState} state={state} />
       </div>
       <br />
       <div style={{ width: "32px" }}>

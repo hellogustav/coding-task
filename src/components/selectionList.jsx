@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import PropTypes from "prop-types";
 import {
   GLOBAL_SCOPE,
@@ -14,12 +15,12 @@ const titles = {
   [GLOBAL_SCOPE]: "Global",
 };
 
-export function SelectionList({ scope }) {
+export function SelectionList({ scope, state }) {
   const title = titles[scope];
 
   return (
     <div className="selection-list">
-      <SectionHeader>{title}</SectionHeader>
+      <SectionHeader icon="vendors">{title}</SectionHeader>
       {scope === GLOBAL_SCOPE && (
         <InfoContainer
           title="Share job globally"
@@ -32,10 +33,13 @@ export function SelectionList({ scope }) {
           description="The job will only be visible to your internal team. You can share it to vendors or globally after it was published."
         />
       )}
+      {JSON.stringify(state, null, 4)}
     </div>
   );
 }
 
 SelectionList.propTypes = {
   scope: PropTypes.string.isRequired,
+  setState: PropTypes.func.isRequired,
+  state: PropTypes.object.isRequired,
 };

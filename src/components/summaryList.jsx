@@ -4,7 +4,7 @@ import { SectionHeader } from "./sectionHeader";
 import { GLOBAL_SCOPE, INTERNAL_SCOPE } from "../options.contants";
 import { ListItem } from "./listItem";
 
-export function SummaryList({ scope }) {
+export function SummaryList({ scope, state }) {
   return (
     <div className="summary-list">
       <SectionHeader>Selected</SectionHeader>
@@ -18,4 +18,6 @@ export function SummaryList({ scope }) {
 
 SummaryList.propTypes = {
   scope: PropTypes.string.isRequired,
+  setState: PropTypes.func.isRequired,
+  state: PropTypes.object.isRequired,
 };
