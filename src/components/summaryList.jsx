@@ -12,6 +12,7 @@ export function SummaryList({ scope, state }) {
         <ListItem icon="internal">Internal only</ListItem>
       )}
       {scope === INTERNAL_SCOPE && <ListItem icon="globe">Global</ListItem>}
+      {JSON.stringify(state, null, 4)}
     </div>
   );
 }

@@ -23,7 +23,7 @@ function App() {
 
   const [scope, setScope] = React.useState("global");
   const [data, setData] = useState({ vendors: [], circles: [] });
-  const [state, setState] = useState({ allVendorsButtonSelected: false, circleButtonSelection: '', circlesSelected: [], vendorsSelected: [] });
+  const [state, setState] = useState({ allVendorsButtonSelected: false, circleButtonSelection: '', vendorsSelected: [] });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,7 +33,10 @@ function App() {
       const circleResponse = await axios(
         'https://mock.hellogustav.com/circles',
       );
-      setData({ ...data, vendors: vendorResponse.data.vendors, circles: circleResponse.data.circles });
+
+      const vendors = vendorResponse.data.vendors
+      const circles = circleResponse.data.circles.map((circle) => ({ ...circle, vendorItems: circle.vendors.map((vendorId) => vendors.find(vendor => vendor.id === vendorId))}))
+      setData({ ...data, vendors, circles, });
     }
     fetchData();
   }, []);
@@ -43,8 +46,8 @@ function App() {
       <Toggle options={toggleOptions} active={scope} onChange={setScope} />
       <div className="main-container">
         <VendorsList scope={scope} circles={data.circles} vendors={data.vendors} setState={setState} state={state} />
-        <SelectionList scope={scope} setState={setState} state={state} />
-        <SummaryList scope={scope} setState={setState} state={state} />
+        <SelectionList scope={scope} setState={setState} state={state} circles={data.circles} vendors={data.vendors} />
+        <SummaryList scope={scope} setState={setState} state={state} circles={data.circles} vendors={data.vendors} />
       </div>
       <br />
       <div style={{ width: "32px" }}>
