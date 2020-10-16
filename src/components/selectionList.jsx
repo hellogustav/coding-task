@@ -9,6 +9,7 @@ import { SectionHeader } from "./sectionHeader";
 import { InfoContainer } from "./infoContainer";
 import { uniq, difference } from "lodash";
 import { ListItem } from "./listItem";
+import {getSelectedData} from "../store/selectors";
 
 const titles = {
   [INTERNAL_SCOPE]: () => "Internal",
@@ -27,56 +28,61 @@ export function SelectionList({ scope, state, circles, setState, vendors }) {
     : "Select entire circle";
 
   const toggle = () => {
+    let vendorsSelected;
     if (isCircleSelected) {
+      vendorsSelected = difference(
+        state.vendorsSelected,
+        selectedCircle.vendors
+        );
+
       selectedCircle.vendorItems = selectedCircle.vendorItems.map((item) => ({
         ...item,
         selected: false,
       }));
-      setState({
-        ...state,
-        vendorsSelected: difference(
-          state.vendorsSelected,
-          selectedCircle.vendors
-        ),
-      });
     } else {
+      vendorsSelected = uniq([
+        ...state.vendorsSelected,
+        ...selectedCircle.vendors,
+      ]);
+
       selectedCircle.vendorItems = selectedCircle.vendorItems.map((item) => ({
         ...item,
         selected: true,
       }));
-      setState({
-        ...state,
-        vendorsSelected: uniq([
-          ...state.vendorsSelected,
-          ...selectedCircle.vendors,
-        ]),
-      });
     }
+
+    setState({
+      ...state,
+      vendorsSelected,
+      ...getSelectedData(vendorsSelected, circles)
+    });
   };
 
   const toggleVendor = (vendor) => {
+    let vendorsSelected;
     if (vendor.selected) {
-      setState({
-        ...state,
-        vendorsSelected: difference(state.vendorsSelected, [vendor.id]),
-      });
+      vendorsSelected = difference(state.vendorsSelected, [vendor.id]);
     } else {
-      setState({
-        ...state,
-        vendorsSelected: uniq([...state.vendorsSelected, vendor.id]),
-      });
+      vendorsSelected = uniq([...state.vendorsSelected, vendor.id]);
     }
+
+    setState({
+      ...state,
+      vendorsSelected,
+      ...getSelectedData(vendorsSelected, circles)
+    });
 
     vendor.selected = !vendor.selected;
   };
 
-  const vendorsList = selectedCircle.vendorItems || (state.allVendorsButtonSelected && vendors);
+  const vendorsList =
+    selectedCircle.vendorItems || (state.allVendorsButtonSelected && vendors);
 
   return (
     <div className="selection-list">
       <SectionHeader icon="vendors">
         {title}
-        {selectedCircle.id && (
+        {selectedCircle.id && scope === VENDORS_SCOPE && (
           <button
             className={`circle-button ${isCircleSelected ? "active" : ""}`}
             onClick={toggle}
@@ -98,22 +104,23 @@ export function SelectionList({ scope, state, circles, setState, vendors }) {
         />
       )}
 
+      {scope === VENDORS_SCOPE &&
       <div className="vendors">
-        {vendorsList.length && vendorsList.map((vendor) => (
-            <ListItem key={vendor.id} logo={vendor.name}>
-              {vendor.name}
-              <input
-                className="checkbox"
-                type="checkbox"
-                name={vendor.id}
-                checked={
-                  vendor.selected
-                }
-                onChange={() => toggleVendor(vendor)}
-              />
-            </ListItem>
-          ))}
+        {vendorsList.length &&
+        vendorsList.map((vendor) => (
+          <ListItem key={vendor.id} logo={vendor.name}>
+            {vendor.name}
+            <input
+              className="checkbox"
+              type="checkbox"
+              name={vendor.id}
+              checked={vendor.selected}
+              onChange={() => toggleVendor(vendor)}
+            />
+          </ListItem>
+        ))}
       </div>
+      }
     </div>
   );
 }
