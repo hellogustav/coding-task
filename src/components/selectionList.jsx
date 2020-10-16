@@ -9,7 +9,11 @@ import { SectionHeader } from "./sectionHeader";
 import { InfoContainer } from "./infoContainer";
 import { uniq, difference } from "lodash";
 import { ListItem } from "./listItem";
-import {getSelectedData} from "../store/selectors";
+import { getSelectedCircle } from "../store/selectors";
+import {
+  selectVendorAction,
+  selectVendorInCircleAction,
+} from "../store/actions";
 
 const titles = {
   [INTERNAL_SCOPE]: () => "Internal",
@@ -18,62 +22,25 @@ const titles = {
 };
 
 export function SelectionList({ scope, state, circles, setState, vendors }) {
-  let selectedCircle =
-    circles.find((circle) => circle.id === state.circleButtonSelection) || {};
+  const selectedCircle = getSelectedCircle(circles, state);
   const title = titles[scope](selectedCircle.name);
+
   const isCircleSelected =
     difference(selectedCircle.vendors, state.vendorsSelected).length === 0;
   const buttonTitle = isCircleSelected
     ? "Unselect entire circle"
     : "Select entire circle";
 
-  const toggle = () => {
-    let vendorsSelected;
-    if (isCircleSelected) {
-      vendorsSelected = difference(
-        state.vendorsSelected,
-        selectedCircle.vendors
-        );
-
-      selectedCircle.vendorItems = selectedCircle.vendorItems.map((item) => ({
-        ...item,
-        selected: false,
-      }));
-    } else {
-      vendorsSelected = uniq([
-        ...state.vendorsSelected,
-        ...selectedCircle.vendors,
-      ]);
-
-      selectedCircle.vendorItems = selectedCircle.vendorItems.map((item) => ({
-        ...item,
-        selected: true,
-      }));
-    }
-
-    setState({
-      ...state,
-      vendorsSelected,
-      ...getSelectedData(vendorsSelected, circles)
-    });
-  };
-
-  const toggleVendor = (vendor) => {
-    let vendorsSelected;
-    if (vendor.selected) {
-      vendorsSelected = difference(state.vendorsSelected, [vendor.id]);
-    } else {
-      vendorsSelected = uniq([...state.vendorsSelected, vendor.id]);
-    }
-
-    setState({
-      ...state,
-      vendorsSelected,
-      ...getSelectedData(vendorsSelected, circles)
-    });
-
-    vendor.selected = !vendor.selected;
-  };
+  const toggleVendorInCircle = () =>
+    selectVendorInCircleAction(
+      isCircleSelected,
+      selectedCircle,
+      circles,
+      state,
+      setState
+    );
+  const toggleVendor = (vendor) =>
+    selectVendorAction(vendor, circles, state, setState);
 
   const vendorsList =
     selectedCircle.vendorItems || (state.allVendorsButtonSelected && vendors);
@@ -85,7 +52,7 @@ export function SelectionList({ scope, state, circles, setState, vendors }) {
         {selectedCircle.id && scope === VENDORS_SCOPE && (
           <button
             className={`circle-button ${isCircleSelected ? "active" : ""}`}
-            onClick={toggle}
+            onClick={toggleVendorInCircle}
           >
             {buttonTitle}
           </button>
@@ -104,23 +71,23 @@ export function SelectionList({ scope, state, circles, setState, vendors }) {
         />
       )}
 
-      {scope === VENDORS_SCOPE &&
-      <div className="vendors">
-        {vendorsList.length &&
-        vendorsList.map((vendor) => (
-          <ListItem key={vendor.id} logo={vendor.name}>
-            {vendor.name}
-            <input
-              className="checkbox"
-              type="checkbox"
-              name={vendor.id}
-              checked={vendor.selected}
-              onChange={() => toggleVendor(vendor)}
-            />
-          </ListItem>
-        ))}
-      </div>
-      }
+      {scope === VENDORS_SCOPE && (
+        <div className="vendors">
+          {vendorsList.length &&
+            vendorsList.map((vendor) => (
+              <ListItem key={vendor.id} logo={vendor.name}>
+                {vendor.name}
+                <input
+                  className="checkbox"
+                  type="checkbox"
+                  name={vendor.id}
+                  checked={vendor.selected}
+                  onChange={() => toggleVendor(vendor)}
+                />
+              </ListItem>
+            ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -7,6 +7,7 @@ import {
 } from "../options.contants";
 import { SectionHeader } from "./sectionHeader";
 import { ListItem } from "./listItem";
+import { selectAllVendorsAction, selectCircleAction } from "../store/actions";
 
 const titles = {
   [INTERNAL_SCOPE]: "Internal",
@@ -17,23 +18,9 @@ const titles = {
 export function VendorsList({ scope, vendors, circles, setState, state }) {
   const title = titles[scope];
 
-  const selectAllVendors = () => {
-    if (scope === VENDORS_SCOPE) {
-      setState({
-        ...state,
-        allVendorsButtonSelected: true,
-        circleButtonSelection: "",
-      });
-    }
-  };
-
-  const selectCircle = (circleId) => {
-    setState({
-      ...state,
-      allVendorsButtonSelected: false,
-      circleButtonSelection: circleId,
-    });
-  };
+  const selectAllVendors = () => selectAllVendorsAction(scope, state, setState);
+  const selectCircle = (circleId) =>
+    selectCircleAction(circleId, state, setState);
 
   return (
     <div className="vendors-list">

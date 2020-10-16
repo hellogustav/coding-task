@@ -1,13 +1,13 @@
 import axios from "axios";
-import {GLOBAL_SCOPE, INTERNAL_SCOPE, VENDORS_SCOPE} from "../options.contants";
+import {
+  GLOBAL_SCOPE,
+  INTERNAL_SCOPE,
+  VENDORS_SCOPE,
+} from "../options.contants";
 
 export const fetchData = async (setData) => {
-  const vendorResponse = await axios(
-    "https://mock.hellogustav.com/vendors"
-  );
-  const circleResponse = await axios(
-    "https://mock.hellogustav.com/circles"
-  );
+  const vendorResponse = await axios("https://mock.hellogustav.com/vendors");
+  const circleResponse = await axios("https://mock.hellogustav.com/circles");
 
   const vendors = vendorResponse.data.vendors.map((vendor) => ({
     ...vendor,
@@ -20,7 +20,7 @@ export const fetchData = async (setData) => {
     ),
   }));
   setData({ vendors, circles });
-}
+};
 
 export const sendData = async (state, scope) => {
   const data = {
@@ -45,8 +45,8 @@ export const sendData = async (state, scope) => {
 
   const circleResponse = await axios.post(
     "https://mock.hellogustav.com/jobs",
-    data,
+    data
   );
 
   return circleResponse;
-}
+};
