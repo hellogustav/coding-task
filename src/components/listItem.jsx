@@ -10,13 +10,18 @@ export function ListItem({
   selected,
   showRightText,
   rightText,
+  onClick,
+  size = "large",
 }) {
   return (
-    <div className={`list-item ${selected ? "selected" : ""}`}>
+    <div
+      onClick={onClick}
+      className={`list-item ${selected ? "selected" : ""}`}
+    >
       <div className="title-container">
         {icon && <Icon icon={icon} />}
-        {logo && <Logo name={logo} />}
-        <div>{children}</div>
+        {logo && <Logo name={logo} size={size} />}
+        <div className="list-item-text">{children}</div>
       </div>
       {showRightText && <h3 className="title">{rightText}</h3>}
     </div>
@@ -29,4 +34,5 @@ ListItem.propTypes = {
   selected: PropTypes.bool,
   showRightText: PropTypes.bool,
   rightText: PropTypes.string,
+  onClick: PropTypes.func,
 };

@@ -21,8 +21,8 @@ export function SummaryList({ scope, state, setState, vendors, circles }) {
   return (
     <div className="summary-list">
       <SectionHeader>
-        <span className="left">Selected</span>
-        <span className="right" onClick={unselectAll}>
+        <span className="selected">Selected</span>
+        <span className="unselect" onClick={unselectAll}>
           Unselect all
         </span>
       </SectionHeader>
@@ -33,16 +33,20 @@ export function SummaryList({ scope, state, setState, vendors, circles }) {
 
       {scope === VENDORS_SCOPE && (
         <div className="vendors-summary-list-container">
-          <div className="circles-list">
-            <h5>Circles ({selectedCircles.length})</h5>
+          <div className="circles">
+            <h5 className="title">Circles ({selectedCircles.length})</h5>
             {selectedCircles.map((circle) => (
-              <ListItem key={circle.id}>{circle.name}</ListItem>
+              <ListItem icon="circle" key={circle.id}>
+                {circle.name}
+              </ListItem>
             ))}
           </div>
-          <div className="vendors-list">
-            <h5>Vendors ({selectedVendors.length})</h5>
+          <div className="vendors">
+            <h5 className="title">Vendors ({selectedVendors.length})</h5>
             {selectedVendors.map((vendor) => (
-              <ListItem key={vendor.id}>{vendor.name}</ListItem>
+              <ListItem logo={vendor.name} size="small" key={vendor.id}>
+                {vendor.name}
+              </ListItem>
             ))}
           </div>
         </div>

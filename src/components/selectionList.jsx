@@ -7,7 +7,7 @@ import {
 } from "../options.contants";
 import { SectionHeader } from "./sectionHeader";
 import { InfoContainer } from "./infoContainer";
-import { uniq, difference } from "lodash";
+import { difference } from "lodash";
 import { ListItem } from "./listItem";
 import { getSelectedCircle } from "../store/selectors";
 import {
@@ -73,16 +73,22 @@ export function SelectionList({ scope, state, circles, setState, vendors }) {
 
       {scope === VENDORS_SCOPE && (
         <div className="vendors">
+          <h5 className="title">Vendors ({vendorsList.length})</h5>
           {vendorsList.length &&
             vendorsList.map((vendor) => (
-              <ListItem key={vendor.id} logo={vendor.name}>
+              <ListItem
+                key={vendor.id}
+                logo={vendor.name}
+                onClick={() => toggleVendor(vendor)}
+                selected={vendor.selected}
+              >
                 {vendor.name}
                 <input
                   className="checkbox"
                   type="checkbox"
                   name={vendor.id}
                   checked={vendor.selected}
-                  onChange={() => toggleVendor(vendor)}
+                  onChange={() => {}}
                 />
               </ListItem>
             ))}

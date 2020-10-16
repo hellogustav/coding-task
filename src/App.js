@@ -19,7 +19,7 @@ const toggleOptions = [
 ];
 
 const initialState = {
-  allVendorsButtonSelected: false,
+  allVendorsButtonSelected: true,
   circleButtonSelection: "",
   vendorsSelected: [],
   selectedCircles: [],
@@ -81,13 +81,19 @@ function App() {
         />
       </div>
       <div className="button-container">
-        <button disabled={data.isSending} type="button" onClick={publish}>
+        <button
+          disabled={data.isSending}
+          type="button"
+          onClick={publish}
+          className="publish-button"
+        >
           Publish
         </button>
       </div>
 
       {data.apiCallStatus && (
         <InfoBox
+          className="api-info"
           text={
             data.apiCallStatus === "success"
               ? "Api call returned 200 success"
