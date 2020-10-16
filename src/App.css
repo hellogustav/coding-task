@@ -69,6 +69,7 @@
   outline: none;
   margin: 0px -1px;
   cursor: pointer;
+  width: 33%;
 }
 .ToggleOption:first-child {
   border-radius: 3px 0 0 3px;
@@ -87,7 +88,238 @@
 
 .ToggleOption-icon {
   width: 16px;
-  height: 16px; width: 16px;
   height: 16px;
   margin-right: 8px;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 500px;
+  justify-content: space-between;
+}
+
+.vendors-list,
+.summary-list,
+.selection-list {
+  width: 33.333%;
+  border: solid 1px #d7e2e8;
+}
+
+.summary-list {
+  background-color: #fafbfc;
+  border-left: none;
+}
+
+.vendors-list {
+  border-right: none;
+}
+
+.vendors-list .list-item,
+.vendors-list .section-header {
+  cursor: pointer;
+}
+
+.selection-list .list-item {
+  cursor: pointer;
+  padding: 15px 0 15px 20px;
+}
+
+.selection-list .list-item.selected {
+  background-color: #e8f1f2;
+}
+
+.selection-list .list-item .title-container {
+  width: 100%;
+}
+
+.selection-list .list-item .title-container .list-item-text {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: 0 20px;
+  color: #13293d;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.selection-list .list-item .title-container .list-item-text .checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.summary-list .title-container {
+  width: 100%;
+}
+
+.summary-list .title-container .title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.summary-list .title-container .title .unselect {
+  cursor: pointer;
+}
+
+.summary-list .section-header {
+  color: #4e5f6e;
+}
+
+.section-header {
+  font-size: 13px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.08;
+  letter-spacing: normal;
+  color: #13293d;
+  text-align: left;
+  padding: 10px 20px 10px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.section-header .icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.section-header .title-container {
+  display: flex;
+}
+
+.section-header .title {
+  margin: 0;
+}
+
+.selection-list .section-header {
+  font-size: 14px;
+  border-bottom: solid 1px #d7e2e8;
+}
+
+.selection-list .circle-button {
+  width: 137px;
+  height: 30px;
+  border-radius: 3px;
+  background-color: #0b748c;
+  color: #fff;
+  padding: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.selection-list .title-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.selection-list .title-container .title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.list-item {
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 20px;
+  justify-content: space-between;
+  position: relative;
+}
+
+.list-item .title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+}
+
+.list-item .icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+.vendors-list .list-item.selected::before,
+.vendors-list .section-header.selected::before {
+  content: "";
+  width: 5px;
+  background: #0aafc4;
+  position: absolute;
+  height: 25px;
+  left: -20px;
+  top: 2px;
+}
+
+.vendors-list .section-header.selected::before {
+  left: 0px;
+  top: 16px;
+}
+
+.info-container {
+  padding: 20px;
+}
+
+.circles {
+  margin: 10px 20px 20px;
+}
+
+.circles .title,
+.vendors .title {
+  text-align: left;
+  color: #89949e;
+  margin: 0 0 5px;
+}
+
+.vendors .title {
+  margin: 10px 0 20px 20px;
+}
+
+.circles .list-item {
+  padding-left: 0;
+}
+
+.vendors-summary-list-container .list-item .list-item-text {
+  margin-left: 15px;
+}
+
+.vendors-summary-list-container .list-item .icon {
+  margin-right: 0;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.publish-button {
+  width: 76px;
+  height: 40px;
+  border-radius: 3px;
+  background-color: #0aafc4;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.publish-button[disabled] {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.api-info {
+  margin: 20px;
 }
