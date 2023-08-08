@@ -1,0 +1,5 @@
+/*.js
+	Access-Control-Allow-Origin: *
+    Vary: Access-Control-Request-Headers
+    Vary: Access-Control-Request-Method
+    Vary: Origin

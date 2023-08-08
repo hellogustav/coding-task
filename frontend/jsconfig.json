@@ -1,0 +1,23 @@
+{
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "components/*": ["./app/components/*"],
+      "containers/*": ["./app/containers/*"],
+      "css/": ["./app/css/*"],
+      "fonts/": ["./app/fonts/*"],
+      "images/": ["./app/images/*"],
+      "mocks/": ["./app/mocks/*"],
+      "routes/": ["./app/routes/*"],
+      "scenes/": ["./app/scenes/*"],
+      "tests/": ["./app/tests/*"],
+      "themes/": ["./app/themes/*"],
+      "translations/": ["./app/translations/*"],
+      "ui-definitions/": ["./app/ui-definitions/*"],
+      "utils/": ["./app/utils/*"],
+      "utils": ["./app/utils/index"],
+      "routes": ["./app/routes/index"]
+    }
+  }
+}

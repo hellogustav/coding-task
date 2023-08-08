@@ -1,0 +1,8 @@
+build/
+internals/
+public/
+patches
+npm-packages-offline-cache
+docs
+.github
+

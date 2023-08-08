@@ -1,0 +1,18 @@
+# Don't check auto-generated stuff into git
+coverage
+build
+build-storybook
+node_modules
+stats.json
+npm-packages-offline-cache
+
+# Cruft
+.DS_Store
+npm-debug.log*
+.idea
+.config
+.cache
+
+# Other
+yarn-error.log
+.yarn-cache.tgz

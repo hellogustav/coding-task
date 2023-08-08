@@ -1,0 +1,13 @@
+# This config file can override any previously defined settings
+# use it to set up the project when running locally instead of
+# modifying config files directly.
+
+use Mix.Config
+
+# Adjust for using the local DB
+#config :backend, Enroll.Repo,
+#  username: System.get_env("USER"),
+#  password: "",
+#  database: "backend_dev",
+#  hostname: "localhost",
+#  pool_size: 10
